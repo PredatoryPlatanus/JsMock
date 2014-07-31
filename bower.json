@@ -1,0 +1,10 @@
+{
+  "name": "JsMock",
+  "description": "Minimalistic javascript mocking framework",
+  "version": "0.0.0",
+  "homepage": "https://github.com/PredatoryPlatanus/JsMock",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+  }
+}
