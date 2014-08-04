@@ -16,9 +16,7 @@
 
         var delegate = function () {
             ++delegate.callCount;
-            if (limitCalls !== null && delegate.callCount > limitCalls) {
-                throw "'" + funcName + "' has been called more than " + limitCalls + " times";
-            }
+            checkCallLimit();
 
             delegate.calledWith.push(serializeArgs(arguments));
 
@@ -28,32 +26,42 @@
         delegate.callCount = 0;
         delegate.calledWith = [];
 
+        function checkCallLimit(){
+            if (limitCalls !== null && delegate.callCount > limitCalls) {
+                throw "'" + funcName + "' has been called more than " + limitCalls + " times";
+            }
+        }
+
         function getResponse(args){
             var response;
-            var argsString = serializeArgs(args);
 
             if(behaviours === null) response = globalResponse;
             else {
-                var match = find(behaviours, function(b){ return b.args == argsString; });
+                var match = findBehaviourByArgs(args);
                 if(match === null){
                     // simple matching, arguments order DOES make a difference, to be redone
                     var allBehaviours = behaviours.map(function(e){ return e.arguments;});
-
+                    // show mocked arg variants in error
                     throw new funcName +' was called with unexpected arguments';
                 }
 
                 response = match.response;
             }
 
-            if(typeof (response) === 'function'){
+            if(typeof (response) === 'function') 
                 response = response.apply(this, args);
-            }
 
-            if(isPromise){
+
+            if(isPromise) 
                 return isRejected ? rejectPromise(response) : successPromise(response);
-            }
+            
 
             return response;
+        }
+
+        function findBehaviourByArgs(args){
+            var argsString = serializeArgs(args);
+            return find(behaviours, function(b){ return b.args == argsString; });
         }
 
         function serializeArgs(args){
@@ -62,9 +70,8 @@
         }
 
         delegate.whenCalled = function(args){
-            if(behaviours === null){
-                behaviours = [];
-            }
+            if(behaviours === null) behaviours = [];
+
             var behaviour = {
                 arguments: serializeArgs(args),
                 response: null
@@ -129,7 +136,7 @@
     }
 
     function areEqual(obj1, obj2){
-        //rough comparison
+        //rough comparison, to be changed
         return JSON.stringify(obj1) === JSON.stringify(obj2);
     }
 
