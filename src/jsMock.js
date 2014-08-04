@@ -16,8 +16,8 @@
 
         var delegate = function () {
             ++delegate.callCount;
-            if (atMostLimit !== null && atMostLimit < callCount) {
-                _mock.raiseFail("'" + funcName + "'has been called more than " + atMostLimit + "times");
+            if (atMostLimit !== null && delegate.callCount > atMostLimit) {
+                throw funcName + "'has been called more than " + atMostLimit + " times";
             }
 
             delegate.calledWith.push(serializeArgs(arguments));

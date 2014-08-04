@@ -38,6 +38,30 @@ describe('JsMock tests.', function(){
 			});
 		});
 
+		describe('And restricted by once()', function(){
+			beforeEach(function(){
+				service.call = mockFunc('call').returns(expectedValue).once();
+			});
+
+			it('should fail on second call', function(){
+				expect(service.call).not.toThrow();
+				expect(service.call).toThrow();
+			});
+		});
+
+		describe('And restricted to three calls', function(){
+			beforeEach(function(){
+				service.call = mockFunc('call').returns(expectedValue).once();
+			});
+
+			it('should fail on second call', function(){
+				expect(service.call).not.toThrow();
+				expect(service.call).not.toThrow();
+				expect(service.call).not.toThrow();
+				expect(service.call).toThrow();
+			});
+		});
+
 		describe('And mocking success promise value', function(){
 			beforeEach(function(){
 				service.callPromise = mockFunc('call').returnsPromise(expectedValue);
