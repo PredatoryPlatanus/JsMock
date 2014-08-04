@@ -11,9 +11,18 @@ module.exports = function(config){
       'test/unit/**/*.js'
     ],
 
+// preprocessors: {
+//   'src/*.js': ['coverage']
+// },
+
+    coverageReporter: {
+      type : 'html',
+      dir : 'coverage/'
+    },
+
     autoWatch : true,
 
-    reporters: ['progress'],
+    reporters: ['progress', 'coverage'],
 
     logLevel: config.LOG_DEBUG,
 

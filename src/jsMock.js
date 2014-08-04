@@ -1,4 +1,4 @@
-// Minimal js mocking framework for qunit+angularJs
+// Minimal js mocking framework for angularJs
 (function (exports) {
     'use strict';
 
@@ -15,24 +15,28 @@
         var behaviours = null;
 
         var delegate = function () {
-            ++callCount;
+            ++delegate.callCount;
             if (atMostLimit !== null && atMostLimit < callCount) {
                 _mock.raiseFail("'" + funcName + "'has been called more than " + atMostLimit + "times");
             }
 
-            calledWith = JSON.stringify(arguments);
+            delegate.calledWith.push(serializeArgs(arguments));
 
             return getResponse(arguments);
         };
 
+        delegate.callCount = 0;
+        delegate.calledWith = [];
+
         function getResponse(args){
             var response;
-            var argsString = JSON.stringify(args);
+            var argsString = serializeArgs(args);
 
             if(behaviours === null) response = globalResponse;
             else {
                 var match = find(behaviours, function(b){ return b.args == argsString; });
                 if(match === null){
+                    // simple matching, arguments order DOES make a difference, to be redone
                     var allBehaviours = behaviours.map(function(e){ return e.arguments;});
 
                     throw new funcName +' was called with unexpected arguments';
@@ -52,12 +56,17 @@
             return response;
         }
 
+        function serializeArgs(args){
+            //make calledWith readable
+            return JSON.stringify(args);
+        }
+
         delegate.whenCalled = function(args){
             if(behaviours === null){
                 behaviours = [];
             }
             var behaviour = {
-                arguments: JSON.stringify(args),
+                arguments: serializeArgs(args),
                 response: null
             };
 
