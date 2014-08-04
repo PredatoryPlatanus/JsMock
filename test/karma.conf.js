@@ -26,7 +26,8 @@ module.exports = function(config){
 
     logLevel: config.LOG_DEBUG,
 
-    browsers: ['Chrome'],
+    //browsers: ['Chrome'],
+    browsers: ['PhantomJS'],
 
     frameworks: ['jasmine'],
 
