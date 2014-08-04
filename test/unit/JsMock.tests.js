@@ -1,5 +1,3 @@
-'use strict';
-
 /* jasmine specs for JsMock go here */
 describe('JsMock tests.', function(){
 	var $httpBackend, $scope, controller, service;
