@@ -3,8 +3,7 @@ describe('JsMock tests.', function(){
 	var $httpBackend, $scope, controller, service;
 	beforeEach(function(){
 		module('app');
-		inject(function($rootScope, $controller, _$httpBackend_){
-			$httpBackend = _$httpBackend_;
+		inject(function($rootScope, $controller){
 			$scope = $rootScope.$new();
 			service = {};
 
@@ -63,13 +62,27 @@ describe('JsMock tests.', function(){
 		describe('And mocking success promise value', function(){
 			beforeEach(function(){
 				service.callPromise = mockFunc('call').returnsPromise(expectedValue);
+				$scope.serviceCallPromise();
+				$scope.$digest();
 			});
 
 			it('should return mockedValue', function(){
-				$scope.serviceCallPromise();
-				$scope.$digest();
 				expect($scope.promiseResult).toBe(expectedValue);
 			});
 		});
+
+		describe('And mocking reject promise value', function(){
+			var expectedReject = 'rejectedValue';
+			beforeEach(function(){
+				service.callPromise = mockFunc('call').rejectsPromise(expectedReject);
+				$scope.serviceCallPromise();
+				$scope.$digest();
+			});
+
+			it('should return rejected value', function(){
+				expect($scope.promiseError).toBe(expectedReject);
+			});
+		});
+
 	});
 });

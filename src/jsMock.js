@@ -6,10 +6,7 @@
 
         var limitCalls = null;
         var callCount = 0;
-        var calledWith = null;
-
-        var isPromise = false;
-        var isRejected = false;        
+        var calledWith = null;     
 
         var globalResponse = null;
         var behaviours = null;
@@ -49,12 +46,7 @@
             }
 
             if(typeof (response) === 'function') 
-                response = response.apply(this, args);
-
-
-            if(isPromise) 
-                return isRejected ? rejectPromise(response) : successPromise(response);
-            
+                response = response.apply(this, args);           
 
             return response;
         }
@@ -88,16 +80,11 @@
         };
 
         delegate.returnsPromise = function(value){
-            isPromise = true;
-
-            return delegate.returns(value);
+            return delegate.returns(successPromise(value));
         };
 
         delegate.rejectsPromise = function(value){
-            isPromise = true;
-            isRejected = false;
-
-            return delegate.returns(value);
+            return delegate.returns(rejectPromise(value));
         };
 
         delegate.limit = function(limit){

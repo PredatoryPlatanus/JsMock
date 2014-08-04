@@ -14,6 +14,8 @@
 			$scope.serviceCallPromise = function(args){
 				service.callPromise(args).then(function(value){
 					$scope.promiseResult = value;
+				}).catch(function(error){
+					$scope.promiseError = error;
 				});
 			};
 		}]).service('service', ['$q', function($q){
