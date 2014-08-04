@@ -6,15 +6,24 @@
 	* Description
 	*/
 	angular.module('app', []).controller('derpController',
-		['$scope', '$http', 'service', function($scope, $http, service){
+		['$scope', 'service', function($scope, service){
 			$scope.serviceCall = function(){
-				$scope.serviceCallResult = service.call();
+				$scope.serviceCallResult = service.call();				
 			};
 
-			$scope.result = $http.get('/someUrl');
-		}]).service('service', ['', function(){
+			$scope.serviceCallPromise = function(){
+				service.callPromise().then(function(value){
+					$scope.promiseResult = value;
+				});
+			};
+		}]).service('service', ['$q', function($q){
+			var text = 'This should not been returned';
 			this.call = function () {
-				return 'This should not been returned';				
+				return text;				
+			};
+
+			this.callPromise = function(){
+				$q.resolve(text);
 			};
 		}]);
-})();
+	})();

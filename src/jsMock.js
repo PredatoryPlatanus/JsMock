@@ -46,7 +46,7 @@
             }
 
             if(isPromise){
-                return isRejected ? rejectPromise(result) : successPromise(result);
+                return isRejected ? rejectPromise(response) : successPromise(response);
             }
 
             return response;

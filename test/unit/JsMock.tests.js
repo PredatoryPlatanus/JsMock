@@ -1,7 +1,7 @@
 'use strict';
 
 /* jasmine specs for JsMock go here */
-describe('JsMock tests', function(){
+describe('JsMock tests.', function(){
 	var $httpBackend, $scope, controller, mockedFunc, service;
 	beforeEach(function(){
 		module('app');
@@ -14,15 +14,30 @@ describe('JsMock tests', function(){
 		});
 	});
 
-	describe('When not using whenCalled arg macher', function(){
+	describe('When not using whenCalled aruments matcher.', function(){
 		var expectedValue = "mocked";
-		beforeEach(function(){
-			service.call = mockFunc('call').returns(expectedValue);
+
+		describe('And mocking simple return value', function(){
+			beforeEach(function(){
+				service.call = mockFunc('call').returns(expectedValue);
+			});
+
+			it('should return mockedValue', function(){
+				$scope.serviceCall();
+				expect($scope.serviceCallResult).toBe(expectedValue);
+			});
 		});
 
-		it('should return mockedValue', function(){
-			$scope.serviceCall();
-			expect($scope.serviceCallResult).toBe(expectedValue);
+		describe('And mocking success promise value', function(){
+			beforeEach(function(){
+				service.callPromise = mockFunc('call').returnsPromise(expectedValue);
+			});
+
+			it('should return mockedValue', function(){
+				$scope.serviceCallPromise();
+				$scope.$digest();
+				expect($scope.promiseResult).toBe(expectedValue);
+			});
 		});
 	});
 });
