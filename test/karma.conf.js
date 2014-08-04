@@ -20,7 +20,7 @@ module.exports = function(config){
       dir : 'coverage/'
     },
 
-    autoWatch : true,
+    autoWatch : false,
 
     reporters: ['progress', 'coverage'],
 
