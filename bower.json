@@ -6,5 +6,6 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
+    "angular-mocks": "~1.2.21"
   }
 }
