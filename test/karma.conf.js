@@ -20,14 +20,11 @@ module.exports = function(config){
       dir : 'coverage/'
     },
 
-    autoWatch : true,
+    autoWatch : false,
 
     reporters: ['progress', 'coverage'],
 
     logLevel: config.LOG_DEBUG,
-
-    //browsers: ['Chrome'],
-    browsers: ['PhantomJS'],
 
     frameworks: ['jasmine'],
 

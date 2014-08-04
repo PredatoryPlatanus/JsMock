@@ -18,8 +18,8 @@
     "prestart": "npm install",
     "start": "http-server -a localhost -p 8000",
     "pretest": "npm install",
-    "test": "node_modules/.bin/karma start test/karma.conf.js",
-    "test-single-run": "node_modules/bin/karma start test/karma.conf.js  --single-run",
+    "test": "node_modules/.bin/karma start test/karma.conf.js --browsers Firefox --single-run --no-auto-watch",
+    "testwatch": "node_modules/bin/karma start test/karma.conf.js  --autowatch",
     "shelljs": "node -e \"require('shelljs/global');\""
   },
   "dependencies": {
