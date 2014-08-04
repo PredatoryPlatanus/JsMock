@@ -4,7 +4,7 @@
 
     exports.mockFunc = function(funcName) {
 
-        var atMostLimit = null;
+        var limitCalls = null;
         var callCount = 0;
         var calledWith = null;
 
@@ -16,8 +16,8 @@
 
         var delegate = function () {
             ++delegate.callCount;
-            if (atMostLimit !== null && delegate.callCount > atMostLimit) {
-                throw funcName + "'has been called more than " + atMostLimit + " times";
+            if (limitCalls !== null && delegate.callCount > limitCalls) {
+                throw "'" + funcName + "' has been called more than " + limitCalls + " times";
             }
 
             delegate.calledWith.push(serializeArgs(arguments));
@@ -93,12 +93,14 @@
             return delegate.returns(value);
         };
 
-        delegate.once = function(){
-            atMostLimit = 1;
-
+        delegate.limit = function(limit){
+            limitCalls = limit;
             return delegate;
         };
 
+        delegate.once = function(){
+            return this.limit(1);
+        };
 
         return delegate;
     };

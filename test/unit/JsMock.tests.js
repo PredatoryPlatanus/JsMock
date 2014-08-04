@@ -51,7 +51,7 @@ describe('JsMock tests.', function(){
 
 		describe('And restricted to three calls', function(){
 			beforeEach(function(){
-				service.call = mockFunc('call').returns(expectedValue).once();
+				service.call = mockFunc('call').returns(expectedValue).limit(3);
 			});
 
 			it('should fail on second call', function(){
