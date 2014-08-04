@@ -1,9 +1,9 @@
-module.exports = function(config){
+module.exports = function (config) {
   config.set({
 
-    basePath : '../',
+    basePath: '../',
 
-    files : [
+    files: [
       'bower_components/angular/angular.js',
       'bower_components/angular-mocks/angular-mocks.js',
       'testables/testApp.js',
@@ -11,18 +11,18 @@ module.exports = function(config){
       'test/unit/**/*.js'
     ],
 
-// preprocessors: {
-//   'src/*.js': ['coverage']
-// },
+    // preprocessors: {
+    //   'src/*.js': ['coverage']
+    // },
 
     coverageReporter: {
-      type : 'html',
-      dir : 'coverage/'
+      type: 'html',
+      dir: 'coverage/'
     },
 
-    browsers:["Chrome"],
+    browsers: ["Chrome"],
 
-    autoWatch : true,
+    autoWatch: true,
 
     reporters: ['progress', 'coverage'],
 
@@ -32,7 +32,7 @@ module.exports = function(config){
 
     captureTimeout: 60000,
 
-    junitReporter : {
+    junitReporter: {
       outputFile: 'test_out/unit.xml',
       suite: 'unit'
     }
